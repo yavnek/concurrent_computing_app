@@ -11,18 +11,31 @@ def bubble_sort(arr):
                 arr[j], arr[j + 1] = arr[j + 1], arr[j]
     return arr
 
-def parallel_sort(arr, num_processes):
+'''def parallel_sort(arr, num_processes):
     chunk_size = len(arr) // num_processes
+    print(f"Chunk size: {chunk_size}")
     chunks = [arr[i:i + chunk_size] for i in range(0, len(arr), chunk_size)]
 
     with Pool(processes=num_processes) as pool:
         sorted_chunks = pool.map(bubble_sort, chunks)
 
     sorted_arr = sorted(sum(sorted_chunks, []))
+    return sorted_arr'''
+
+def parallel_sort(arr, num_processes):
+    '''if num_processes > len(arr):
+        num_processes = len(arr)'''
+    chunk_size = len(arr) // num_processes
+    if chunk_size == 0:
+        chunk_size = 1
+    chunks = [arr[i:i + chunk_size] for i in range(0, len(arr), chunk_size)]
+    with Pool(processes=num_processes) as pool:
+        sorted_chunks = pool.map(bubble_sort, chunks)
+    sorted_arr = sorted(sum(sorted_chunks, []))
     return sorted_arr
 
 # Przykładowe dane do posortowania
-data_size = 10000
+# data_size = 10000
 def create_data_array(data_size):
     return [random.randint(1, 100) for _ in range(data_size)]
 
@@ -47,7 +60,7 @@ def multiprocess_parrallel_sort_time(data_array, num_processes):
         del sorted_data_parallel
         return parallel_process_time
     except:
-        return 
+        return -1
     
 '''def comparing_sort_time(max_data_size):
     max_num_processes = multiprocessing.cpu_count()
