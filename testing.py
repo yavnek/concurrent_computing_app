@@ -4,12 +4,13 @@ import time
 
 
 def bubble_sort(arr):
-    n = len(arr)
+    array = arr.copy()
+    n = len(array)
     for i in range(n):
         for j in range(0, n - i - 1):
-            if arr[j] > arr[j + 1]:
-                arr[j], arr[j + 1] = arr[j + 1], arr[j]
-    return arr
+            if array[j] > array[j + 1]:
+                array[j], array[j + 1] = array[j + 1], array[j]
+    return array
 
 
 def parallel_sort(arr, num_processes):
@@ -19,7 +20,7 @@ def parallel_sort(arr, num_processes):
     sorted_chunks = bubble_sort(chunks)
 
     sorted_arr = sorted(sum(sorted_chunks, []))
-    return sorted_arr
+    #return sorted_arr
 
 
 # Przykładowe dane do posortowania
