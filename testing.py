@@ -26,10 +26,10 @@ def single_process_sort_time(data_array):
 
 
 def parallel_sort(arr, num_processes):
-    chunk_size = len(arr) // num_processes
-    chunks = [arr[i:i + chunk_size] for i in range(0, len(arr), chunk_size)]
+    #chunk_size = len(arr) // num_processes
+    #chunks = [arr[i:i + chunk_size] for i in range(0, len(arr), chunk_size)]
 
-    sorted_chunks = bubble_sort(chunks)
+    sorted_chunks = bubble_sort(arr)
 
     sorted(sum(sorted_chunks, []))
 
@@ -47,7 +47,7 @@ def multiprocess_parrallel_sort_time(data_array, num_processes):
         with concurrent.futures.ProcessPoolExecutor(num_processes) as executor:
             start_time = time.time()
 
-            executor.map(parallel_sort, (data_array, num_processes))
+            executor.map(parallel_sort, (data_array, num_processes), chunksize=num_processes // 2)
 
             parallel_process_time = time.time() - start_time
 
